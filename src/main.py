@@ -62,7 +62,7 @@ R2_ACCESS_KEY_ID=your_access_key_here
 R2_SECRET_ACCESS_KEY=your_secret_key_here
 R2_ENDPOINT=https://your-account.r2.cloudflarestorage.com
 R2_BUCKET=your_bucket_name
-R2_PUBLIC_URL=https://your-public-url.r2.dev
+R2_PUBLIC_URL=https://github.23201.com
 """
 
     with open(env_file, 'w') as f:
@@ -90,7 +90,7 @@ def cmd_upload_local(args):
         return 1
 
     # Determine key
-    key = args.key or f"skills/{source.name}.zip"
+    key = args.key or f"jayleecn/{source.name}.zip"
 
     # Upload
     print(f"☁️  Uploading to R2: {key}")
@@ -144,7 +144,7 @@ def cmd_upload_github(args):
         return 1
 
     # Determine key
-    key = args.key or f"skills/{repo_name}.zip"
+    key = args.key or f"jayleecn/{repo_name}.zip"
 
     # Upload
     print(f"☁️  Uploading to R2: {key}")
