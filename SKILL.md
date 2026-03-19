@@ -39,7 +39,7 @@ trigger: |
 
 ### `/upload setup` - 初始化配置
 
-创建配置文件模板：
+创建配置文件和白名单模板：
 ```
 /upload setup
 ```
@@ -48,21 +48,43 @@ trigger: |
 
 ---
 
+### `/upload auto` - 自动同步白名单（核心功能）
+
+管理自动同步白名单。只有白名单中的仓库才会被自动同步。
+
+**查看白名单：**
+```
+/upload auto list
+```
+
+**添加到白名单：**
+```
+/upload auto add ~/.agents/skills/mp-editor
+/upload auto add https://github.com/user/repo
+```
+
+**从白名单移除：**
+```
+/upload auto remove mp-editor
+```
+
+**手动同步白名单：**
+```
+/upload auto sync
+```
+
+---
+
 ### `/upload local <目录>` - 上传本地目录
 
 把本地技能目录打包上传到 R2：
 ```
-/upload local ~/skills/mp-editor
+/upload local ~/.agents/skills/mp-editor
 ```
 
 **参数：**
-- `-k, --key`: 自定义 R2 中的对象 key（默认: `skills/{dirname}.zip`）
+- `-k, --key`: 自定义 R2 中的对象 key（默认: `jayleecn/{dirname}.zip`）
 - `-c, --clean`: 上传后删除本地 zip 文件
-
-**示例：**
-```
-/upload local ~/skills/mp-editor -k backup/mp-editor-v2.zip -c
-```
 
 ---
 
@@ -78,26 +100,27 @@ trigger: |
 - `-k, --key`: 自定义 R2 中的对象 key
 - `-c, --clean`: 上传后删除本地 zip 文件
 
-**示例：**
-```
-/upload github https://github.com/jayleecn/mp-editor -b develop -k skills/mp-editor-dev.zip
-```
-
 ---
 
 ## 💡 自动化工作流
 
-### 场景：主 skill 更新后自动备份到 R2
+### 场景：GitHub push 后自动同步到 R2
 
-在你的主 skill 开发流程中，提交到 GitHub 后自动调用：
+在你的主 skill 仓库执行 `git push` 后，AI 会检测到并提示：
 
+> "该仓库在白名单中，需要同步到 R2 吗？"
+
+确认后自动执行：
 ```bash
-# 提交到 GitHub 后
-/upload local ~/skills/your-skill
-
-# 或者从 GitHub 拉取最新版本
-/upload github https://github.com/user/your-skill
+/upload auto sync
 ```
+
+或只同步单个：
+```bash
+/upload local ~/.agents/skills/mp-editor
+```
+
+**白名单配置位置：** `~/.skill-upload/auto-sync.json`
 
 ---
 

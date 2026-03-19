@@ -66,16 +66,52 @@ R2_PUBLIC_URL=https://github.23201.com
 
 ---
 
+## 🤖 自动同步白名单
+
+白名单机制用于控制哪些仓库会在 git push 后自动提示同步到 R2。
+
+### 查看白名单
+```
+/upload auto list
+```
+
+### 添加到白名单
+```
+/upload auto add ~/.agents/skills/mp-editor
+/upload auto add https://github.com/jayleecn/mp-editor
+```
+
+### 从白名单移除
+```
+/upload auto remove mp-editor
+```
+
+### 手动同步白名单所有仓库
+```
+/upload auto sync
+```
+
+**白名单配置文件**：`~/.skill-upload/auto-sync.json`
+
+---
+
 ## 💡 自动化工作流
 
-### 场景：GitHub 更新后自动备份到 R2
+### 场景：GitHub push 后自动备份到 R2
 
-每次主 skill 提交到 GitHub 后，自动运行：
+1. 先把仓库加入白名单：
 ```
-/upload github https://github.com/jayleecn/mp-editor
+/upload auto add ~/.agents/skills/mp-editor
 ```
 
-或者从本地工作目录：
+2. 每次 git push 后，运行同步命令：
+```
+/upload auto sync
+```
+
+### 场景：一次性上传本地目录
+
+直接上传本地目录（不在白名单也可以）：
 ```
 /upload local ~/.agents/skills/mp-editor
 ```
